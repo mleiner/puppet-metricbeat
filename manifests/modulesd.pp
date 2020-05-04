@@ -5,6 +5,7 @@ define metricbeat::modulesd(
   Hash             $config        = {},
   Optional[String] $source        = undef,
   Optional[String] $content       = undef,
+  Stdlib::Filemode $mode          = '0644',
 ){
   # Use the default template as the source if non specified
   if ! $source and ! $content {
@@ -18,7 +19,7 @@ define metricbeat::modulesd(
     content => $content,
     owner   => 'root',
     group   => 'root',
-    mode    => '0644',
+    mode    => $mode,
     require => Class['::metricbeat'],
     notify  => Class['::metricbeat::service'],
   }
