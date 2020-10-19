@@ -16,12 +16,6 @@ class metricbeat::install inherits metricbeat {
       provider => powershell,
     }
 
-    if !defined(File[$metricbeat::install_dir]) {
-      file{$metricbeat::install_dir:
-        ensure => directory,
-      }
-    }
-
     archive{ $zip_file:
       source       => $metricbeat::real_download_url,
       cleanup      => false,
@@ -32,7 +26,6 @@ class metricbeat::install inherits metricbeat {
       command => "\$sh=New-Object -COM Shell.Application;\$sh.namespace((Convert-Path '${metricbeat::install_dir}')).Copyhere(\$sh.namespace((Convert-Path '${zip_file}')).items(), 16)", # lint:ignore:140chars
       creates => $version_file,
       require => [
-        File[$metricbeat::install_dir],
         Archive[$zip_file],
       ],
     }

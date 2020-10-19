@@ -128,7 +128,6 @@ describe 'metricbeat' do
       describe 'metricbeat::install' do
         if os_facts[:kernel] == 'windows'
           it do
-            is_expected.to contain_file('C:/Program Files').with(ensure: 'directory')
             is_expected.to contain_archive('C:/Windows/Temp/metricbeat-6.6.1-windows-x86_64.zip').with(
               creates: 'C:/Program Files/Metricbeat/metricbeat-6.6.1-windows-x86_64',
               source: 'https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-6.6.1-windows-x86_64.zip',
